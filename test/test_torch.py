@@ -2885,7 +2885,7 @@ class TestTorchDeviceType(TestCase):
             else:
                 return t.cpu().numpy()
 
-        for dim in dims if dims else range(t.dim()):
+        for dim in dims or range(t.dim()):
             prepend = t.narrow(dim, 0, 1)
             append = t.narrow(dim, 0, 1)
             np_t = to_np(t)
@@ -5704,7 +5704,7 @@ class TestTorchDeviceType(TestCase):
             ret = run(device, data, mod_scaling, opt_scaling, scaler, loss_fn, skip_iter, True)
 
             # Allows run() to optionally return a different scaler instance.
-            scaler = ret if ret else scaler
+            scaler = ret or scaler
 
             # If scaling was enabled, the scale factor should have been multiplied by the growth factor
             # len(data) - skipped times and the backoff factor "skipped" times.

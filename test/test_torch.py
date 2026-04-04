@@ -4141,6 +4141,9 @@ class TestTorchDeviceType(TestCase):
                 a = torch.randint(-5, 5, size=size, dtype=dtype, device=device)
             return a + (a == 0).to(dtype)
 
+        if self.device_type == "mps" and dtype is torch.complex128:
+            self.skipTest("MPS does not support complex128")
+
         def _test_addcdiv():
             a = non_zero_rand((2, 2), dtype=dtype, device=device)
             b = non_zero_rand((2, 2), dtype=dtype, device=device)
